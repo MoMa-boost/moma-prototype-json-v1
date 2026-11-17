@@ -1,0 +1,2227 @@
+[
+  {
+    "site_id": "SITE-001",
+    "name": "Syneqt Wesseling",
+    "type": "Customer",
+    "lat": 50.819,
+    "lng": 6.978,
+    "address": "Syneqt GmbH Brühler Str. 2, 50389 Wesseling-Rodenkirchen",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@evonik.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@evonik.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@evonik.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-002",
+    "name": "Syneqt Wesseling",
+    "type": "Customer",
+    "lat": 50.819,
+    "lng": 6.978,
+    "address": "Syneqt GmbH Brühler Str. 2, 50389 Wesseling-Rodenkirchen",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@evonik.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@evonik.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@evonik.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-003",
+    "name": "Syneqt Wesseling",
+    "type": "Customer",
+    "lat": 50.819,
+    "lng": 6.978,
+    "address": "Syneqt GmbH Brühler Str. 2, 50389 Wesseling-Rodenkirchen",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@evonik.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@evonik.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@evonik.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-004",
+    "name": "Basell Wesseling",
+    "type": "Customer",
+    "lat": 50.833074,
+    "lng": 6.958036,
+    "address": "Kerkrader Str. Tor , 50997 Wesseling",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@lyondellbasell.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@lyondellbasell.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@lyondellbasell.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-005",
+    "name": "Basell Wesseling",
+    "type": "Customer",
+    "lat": 50.833074,
+    "lng": 6.958036,
+    "address": "Kerkrader Str. Tor , 50997 Wesseling",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@lyondellbasell.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@lyondellbasell.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@lyondellbasell.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-006",
+    "name": "Basell Wesseling",
+    "type": "Customer",
+    "lat": 50.833074,
+    "lng": 6.958036,
+    "address": "Kerkrader Str. Tor , 50997 Wesseling",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@lyondellbasell.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@lyondellbasell.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@lyondellbasell.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-007",
+    "name": "Godorf Hafen",
+    "type": "Station",
+    "lat": 50.844257,
+    "lng": 6.977678,
+    "address": "Rheinwerft, Rodenkirchen, 50997 Köln",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@rheincargo.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@rheincargo.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@rheincargo.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-008",
+    "name": "Yncoris Hürth",
+    "type": "Customer",
+    "lat": 50.8577,
+    "lng": 6.8678,
+    "address": "50354 Hürth /Industriestr. 300 / Industriestr.149",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@yncoris.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@yncoris.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-009",
+    "name": "Vinnolit Hürth",
+    "type": "Customer",
+    "lat": 50.8577,
+    "lng": 6.8678,
+    "address": "50354 Hürth /Industriestr. 300 / Industriestr.149",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@westlakevinnolit.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@westlakevinnolit.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@yncoris.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@yncoris.com",
+        "phone": "+49-4714",
+        "mobile": "+49 160 4714"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-010",
+    "name": "CAAB Chemicals",
+    "type": "Customer",
+    "lat": 50.8577,
+    "lng": 6.8678,
+    "address": "50354 Hürth /Industriestr. 300 / Industriestr.149",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@cabb-chemicals.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@cabb-chemicals.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@yncoris.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@yncoris.com",
+        "phone": "+49-4714",
+        "mobile": "+49 160 4714"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-011",
+    "name": "Köln Eifeltor",
+    "type": "Station",
+    "lat": 50.9047,
+    "lng": 9.9388,
+    "address": "Neuer Weyerstraßerweg 190, 50969 Köln",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-012",
+    "name": "Köln-Bickendorf",
+    "type": "Station",
+    "lat": 50.9587,
+    "lng": 9.8908,
+    "address": "Vitalisstraße 290, 50827 Ehrenfeld",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@hgkgroup.de",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-013",
+    "name": "Köln Gremberg",
+    "type": "Station",
+    "lat": 50.9138,
+    "lng": 7.0217,
+    "address": "Rather Str. 1c, 51149 Porz",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-014",
+    "name": "Köln Gremberg",
+    "type": "Station",
+    "lat": 50.9138,
+    "lng": 7.0217,
+    "address": "Rather Str. 1c, 51149 Porz",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-015",
+    "name": "Köln-Kalk",
+    "type": "Station",
+    "lat": 50.936,
+    "lng": 7.0129,
+    "address": "Kalker Hauptstraße 298, 51103 Köln-Kalk",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "",
+        "phone": "+49-4713",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-016",
+    "name": "Köln-Niehl Hafen",
+    "type": "Station",
+    "lat": 50.9836,
+    "lng": 6.9738,
+    "address": "50735 Nippes / A Niehler Hafen",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@hgkgroup.de",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@hgkgroup.de",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-017",
+    "name": "Köln-Niehl",
+    "type": "Station",
+    "lat": 50.9859,
+    "lng": 6.9583,
+    "address": "50737 Nippes / Scheibenstraße 159",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-018",
+    "name": "Evonik Lülsdorf",
+    "type": "Customer",
+    "lat": 50.8159,
+    "lng": 7.0448,
+    "address": "Feldmühlestraße 3, 53859 Niederkassel-Ranzel",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@evonik.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@evonik.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "nikolas.hartmann@evonik.com",
+        "phone": "+49-4713",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@evonik.com",
+        "phone": "",
+        "mobile": ""
+      },
+      {
+        "name": "E.S. Sieux",
+        "email": "test5@evonik.com",
+        "phone": "+49-4715",
+        "mobile": ""
+      },
+      {
+        "name": "F. Rein",
+        "email": "test6@evonik.com",
+        "phone": "+49-4716",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-019",
+    "name": "Infineum Köln",
+    "type": "Customer",
+    "lat": 50.9897,
+    "lng": 6.9596,
+    "address": "Neusser Landstraße 16, 50735 Nippes",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@Infineum.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@Infineum.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-020",
+    "name": "Nouryon Köln",
+    "type": "Customer",
+    "lat": 50.9918,
+    "lng": 6.9508,
+    "address": "Geestemünder Str. 26, 50735 Nippes",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-021",
+    "name": "Covestro Leverkusen",
+    "type": "Customer",
+    "lat": 50.9928,
+    "lng": 7.0106,
+    "address": "51061 Mühlheim / Düsseldorfer Str. 500",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@covestro.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@covestro.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-022",
+    "name": "Chemion Leverkusen",
+    "type": "Customer",
+    "lat": 50.9928,
+    "lng": 7.0106,
+    "address": "51061 Mühlheim / Düsseldorfer Str. 500",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@chemion.biz",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@chemion.biz",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@chemion.biz",
+        "phone": "",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@chemion.biz",
+        "phone": "+49-4714",
+        "mobile": "+49 160 4714"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-023",
+    "name": "Chemion Leverkusen",
+    "type": "Customer",
+    "lat": 50.9928,
+    "lng": 7.0106,
+    "address": "51061 Mühlheim / Düsseldorfer Str. 500",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "C. Arro",
+        "email": "",
+        "phone": "+49-4713",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-024",
+    "name": "Ineos Dormagen",
+    "type": "Customer",
+    "lat": 51.0725,
+    "lng": 6.8549,
+    "address": "Neusser Landstraße 441, 50769 Chorweiler",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@ineos.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@ineos.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@ineos.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@ineos.com",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-025",
+    "name": "Ineos Dormagen",
+    "type": "Customer",
+    "lat": 51.0725,
+    "lng": 6.8549,
+    "address": "Neusser Landstraße 441, 50769 Chorweiler",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@ineos.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@ineos.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@ineos.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@ineos.com",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-026",
+    "name": "Covestro Dormagen",
+    "type": "Customer",
+    "lat": 51.0946,
+    "lng": 6.8429,
+    "address": "50769 Chorweiler / Neusser Landstraße 501",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@covestro.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@covestro.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-027",
+    "name": "Covestro Dormagen",
+    "type": "Customer",
+    "lat": 51.0946,
+    "lng": 6.8429,
+    "address": "50769 Chorweiler / Neusser Landstraße 501",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@covestro.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@covestro.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-028",
+    "name": "Chemion Dormagen",
+    "type": "Customer",
+    "lat": 51.0946,
+    "lng": 6.8429,
+    "address": "50769 Chorweiler / Neuser Landstraße 501",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@chemion.biz",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@chemion.biz",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-029",
+    "name": "Chemion Dormagen",
+    "type": "Customer",
+    "lat": 51.0946,
+    "lng": 6.8429,
+    "address": "50769 Chorweiler / Neuser Landstraße 501",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@chemion.biz",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@chemion.biz",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@chemion.de",
+        "phone": "",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "",
+        "phone": "+49-4714",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-030",
+    "name": "RWE / RSB Niederaussem",
+    "type": "Customer",
+    "lat": 0.0,
+    "lng": 6.6847,
+    "address": "Auenheimer Str. 27, 50129 Bergheim-Niederaußem",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@rwe.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@rwe.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@rwe.com",
+        "phone": "",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "",
+        "phone": "+49-4714",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-031",
+    "name": "RWE / RSB Niederaussem",
+    "type": "Customer",
+    "lat": 0.0,
+    "lng": 6.6847,
+    "address": "Auenheimer Str. 27, 50129 Bergheim-Niederaußem",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@rwe.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@rwe.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@rwe.com",
+        "phone": "",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "",
+        "phone": "+49-4714",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-032",
+    "name": "Eifelbahn Verkehrs-Gmbh",
+    "type": "Station",
+    "lat": 50.5689,
+    "lng": 7.2868,
+    "address": "Rheinhöller 3, 53545 Linz am Rhein",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@zugtouren.de",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@zugtouren.de",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@zugtouren.de",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-033",
+    "name": "ThyssenKrupp",
+    "type": "Customer",
+    "lat": 51.4826,
+    "lng": 6.7609,
+    "address": "Kaiser-Wilhelm-Str. 100, 47166 Duisburg",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@thyssenkrupp.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-034",
+    "name": "AsTrans Bottrop",
+    "type": "Station",
+    "lat": 51.51246,
+    "lng": 6.94785,
+    "address": "Knippenburg 38, 46238 Bottrop",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@astrans.de",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-035",
+    "name": "Ineos Moers",
+    "type": "Customer",
+    "lat": 51.452,
+    "lng": 6.675,
+    "address": "Römerstraße, 47443 Moers",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@ineos.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@ineos.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-036",
+    "name": "Covestro Uerdingen / Krefeld",
+    "type": "Customer",
+    "lat": 51.3549,
+    "lng": 6.6403,
+    "address": "47829 Krefeld / Alte Friedhofstr. 10-12",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@covestro.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@covestro.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-037",
+    "name": "Chemion Uerdingen /Krefeld",
+    "type": "Customer",
+    "lat": 51.3549,
+    "lng": 51.3549,
+    "address": "47829 Krefeld / Alte Friedhofstr. 10-12",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@chemion.biz",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@chemion.biz",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@chemion.biz",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@chemion.de",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-038",
+    "name": "KSW Siegen",
+    "type": "Station",
+    "lat": 50.8688,
+    "lng": 8.0115,
+    "address": "Eiserfelder Str. 16, 57072 Siegen-Achenbach",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15",
+      "INT-21"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@ksw-siegen.de",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@ksw-siegen.de",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "",
+        "phone": "+49-4713",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-039",
+    "name": "KSW Siegen",
+    "type": "Station",
+    "lat": 50.8688,
+    "lng": 8.0115,
+    "address": "Eiserfelder Str. 16, 57072 Siegen-Achenbach",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15",
+      "INT-21"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@ksw-siegen.de",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@ksw-siegen.de",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "",
+        "phone": "+49-4713",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-040",
+    "name": "KSW Siegen",
+    "type": "Station",
+    "lat": 50.914,
+    "lng": 8.0445,
+    "address": "DEW 57078 Geisweid Obere Kaiserstraße 8",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15",
+      "INT-21"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@ksw-siegen.de",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@ksw-siegen.de",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "",
+        "phone": "+49-4713",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-041",
+    "name": "Solvay Rheinberg",
+    "type": "Customer",
+    "lat": 51.5372,
+    "lng": 6.5968,
+    "address": "Xantener Str. 237, 47495 Rheinberg-Ossenberg",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@ineos.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@ineos.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@solvay.com",
+        "phone": "+49-4713",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-042",
+    "name": "Gasrußwerke Dortmund",
+    "type": "Customer",
+    "lat": 51.5488,
+    "lng": 7.4335,
+    "address": "Weidenstraße 70, 44147 Eving",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@hauke.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@hauke.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "",
+        "phone": "",
+        "mobile": "+49 160 4713"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-043",
+    "name": "Rain Carbon",
+    "type": "Customer",
+    "lat": 51.5608,
+    "lng": 7.3232,
+    "address": "Kekulestraße 30, 44579 Castrop-Rauxel-Rauxel",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@raincarbon.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-044",
+    "name": "Ineos Rheinberg",
+    "type": "Customer",
+    "lat": 51.5372,
+    "lng": 6.5968,
+    "address": "Xantener Str. 237, 47495 Rheinberg-Ossenberg",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@ineos.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@ineos.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-045",
+    "name": "Evonik / Syneqt Marl",
+    "type": "Customer",
+    "lat": 51.6561,
+    "lng": 7.1125,
+    "address": "Paul-Baumann-Straße 1, 45772 Marl",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@evonik.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@evonik.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@evonik.com",
+        "phone": "+49-4713",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@evonik.com",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-046",
+    "name": "Evonik / Syneqt Marl",
+    "type": "Customer",
+    "lat": 51.6561,
+    "lng": 7.1125,
+    "address": "Paul-Baumann-Straße 1, 45772 Marl",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@evonik.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@evonik.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@evonik.com",
+        "phone": "+49-4713",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@evonik.com",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-047",
+    "name": "Evonik / Syneqt Marl",
+    "type": "Customer",
+    "lat": 51.6561,
+    "lng": 7.1125,
+    "address": "Paul-Baumann-Straße 1, 45772 Marl",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@evonik.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@evonik.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@evonik.com",
+        "phone": "+49-4713",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@evonik.com",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-048",
+    "name": "Evonik / Syneqt Marl",
+    "type": "Customer",
+    "lat": 51.6561,
+    "lng": 7.1125,
+    "address": "Paul-Baumann-Straße 1, 45772 Marl",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@evonik.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "test2@evonik.com",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      },
+      {
+        "name": "C. Arro",
+        "email": "test3@evonik.com",
+        "phone": "+49-4713",
+        "mobile": ""
+      },
+      {
+        "name": "C. Arrello",
+        "email": "test4@evonik.com",
+        "phone": "",
+        "mobile": ""
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-049",
+    "name": "Lhoist Menden Rheinkalk",
+    "type": "Customer",
+    "lat": 51.4276,
+    "lng": 7.7898,
+    "address": "Hönnetalstr. 74 / 58710 Menden",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-07",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@lhoist.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      },
+      {
+        "name": "M. Obiel",
+        "email": "",
+        "phone": "+49-4712",
+        "mobile": "+49 160 4712"
+      }
+    ]
+  },
+  {
+    "site_id": "SITE-050",
+    "name": "Röhm Worms",
+    "type": "Customer",
+    "lat": 49.6348,
+    "lng": 8.3538,
+    "address": "Im Pfaffenwinkel 6 / 67547 Worms",
+    "rid_accepted": false,
+    "approved_interventions": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-05",
+      "INT-06",
+      "INT-08",
+      "INT-09",
+      "INT-10",
+      "INT-11",
+      "INT-12",
+      "INT-13",
+      "INT-14",
+      "INT-15"
+    ],
+    "contacts": [
+      {
+        "name": "W. Agen",
+        "email": "test1@roehm.com",
+        "phone": "+49-4711",
+        "mobile": "+49 160 4711"
+      }
+    ]
+  }
+]

@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <title>VTG MoMa Decision Support Prototype v17 (JSON Fetch)</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { vtgNavy: '#002B49', vtgBlue: '#005F9E', vtgCyan: '#00A3E0', vtgOrange: '#FF5800' } } } }
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    #map { height: 100%; width: 100%; z-index: 10; background: #E5E3DF; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #001f35; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #005F9E; border-radius: 3px; }
+    .leaflet-popup-content-wrapper { border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    .wagon-ping { animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+    @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+  </style>
+</head>
+<body class="bg-[#041220] text-slate-100 h-screen flex flex-col overflow-hidden">
+
+  <!-- TOP HEADER -->
+  <header class="bg-vtgNavy border-b border-vtgBlue/40 px-5 py-2.5 flex items-center justify-between shadow-lg z-20 flex-shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="bg-vtgOrange w-8 h-8 rounded flex items-center justify-center font-black text-white text-lg tracking-wider shadow">V</div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-extrabold text-base tracking-wide text-white">VTG MoMa</span>
+          <span class="bg-vtgCyan/20 text-vtgCyan border border-vtgCyan/40 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded">Prototype v17 (Cloud)</span>
+        </div>
+        <div class="text-[11px] text-emerald-400 font-mono" id="dbStatus">Requesting JSON data...</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3 text-xs">
+      <button onclick="window.exportHistoryCSV()" class="flex items-center gap-1.5 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-400 border border-emerald-500/30 px-2.5 py-1.5 rounded font-medium transition">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i> Export History (CSV)
+      </button>
+      <button onclick="window.resetDefaults()" class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-2.5 py-1.5 rounded font-medium transition">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN VIEWPORT -->
+  <div class="flex-1 flex overflow-hidden">
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-[500px] bg-vtgNavy/95 border-r border-vtgBlue/30 flex flex-col flex-shrink-0 z-20 shadow-2xl">
+      <div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-4">
+
+        <!-- 1. WAGON SELECT & MASTER DATA -->
+        <div class="bg-black/30 border border-slate-700/60 rounded-lg p-3.5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-white flex items-center gap-1.5"><i data-lucide="train" class="w-4 h-4 text-vtgOrange"></i> 1. Wagon Master Data</span>
+            <span id="txtWagonType" class="text-[10px] text-vtgCyan font-bold"></span>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[10px] font-semibold text-slate-300 block mb-1">Search Wagon Number</label>
+              <input type="text" id="wagonInput" list="wagonList" onchange="window.onWagonSearch(this.value)" placeholder="e.g. 31 80 4993..." class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-xs text-white focus:border-vtgCyan outline-none">
+              <datalist id="wagonList"></datalist>
+              <div id="wagonErrorMsg" class="hidden text-[9px] text-rose-400 mt-1">Wagon not found in fleet list!</div>
+            </div>
+            <div>
+              <label class="text-[10px] font-semibold text-slate-300 block mb-1">Desired Date</label>
+              <input type="date" id="inputDate" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-xs text-white focus:border-vtgCyan outline-none">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-[9px] text-slate-400 block mb-1">Keeper</label>
+              <input type="text" id="inputHalter" value="VTG" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-white">
+            </div>
+            <div>
+              <label class="text-[9px] text-slate-400 block mb-1">Lessee (Optional)</label>
+              <input type="text" id="inputMieter" placeholder="--" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-white">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 border-t border-slate-800 pt-2">
+            <div>
+              <label class="text-[9px] text-slate-400 block mb-1">Last Ladegut (NHM Search)</label>
+              <input type="text" id="inputNHM" list="nhmList" onchange="window.onNHMSearch(this.value)" placeholder="Code / Keyword..." class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-white focus:border-vtgCyan outline-none">
+              <datalist id="nhmList"></datalist>
+            </div>
+            <div>
+              <label class="text-[9px] text-slate-400 block mb-1">Ladegut Description</label>
+              <input type="text" id="inputLadegutDesc" placeholder="Auto-filled..." class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-white">
+            </div>
+          </div>
+          <div class="border-t border-slate-800 pt-2">
+            <div class="flex items-center justify-between mb-1">
+              <label class="text-[10px] font-semibold text-slate-300">Telematics Coordinates (GPS)</label>
+              <span class="text-[9px] text-vtgCyan italic">Click map to relocate</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex items-center gap-1 bg-slate-900 border border-slate-700 rounded px-2 py-1">
+                <span class="text-[10px] text-slate-500 font-mono">LAT</span>
+                <input id="inputLat" type="number" step="0.0001" onchange="window.updateWagonPositionManual()" class="bg-transparent w-full text-xs text-white font-mono focus:outline-none">
+              </div>
+              <div class="flex items-center gap-1 bg-slate-900 border border-slate-700 rounded px-2 py-1">
+                <span class="text-[10px] text-slate-500 font-mono">LNG</span>
+                <input id="inputLng" type="number" step="0.0001" onchange="window.updateWagonPositionManual()" class="bg-transparent w-full text-xs text-white font-mono focus:outline-none">
+              </div>
+            </div>
+          </div>
+          <div class="border-t border-slate-800 pt-2">
+             <label class="text-[10px] font-semibold text-slate-300 block mb-1.5">Operational State (C-U-L)</label>
+             <div class="grid grid-cols-3 gap-2">
+              <label class="flex items-center gap-1.5 bg-slate-900 border border-slate-700 rounded p-1.5 cursor-pointer hover:border-vtgCyan">
+                <input type="radio" name="wagonStatus" value="C" onchange="window.runDecisionEngine()" class="text-vtgCyan">
+                <span class="text-[10px] font-bold text-white">Cleaned</span>
+              </label>
+              <label class="flex items-center gap-1.5 bg-slate-900 border border-slate-700 rounded p-1.5 cursor-pointer hover:border-vtgCyan">
+                <input type="radio" name="wagonStatus" value="U" checked onchange="window.runDecisionEngine()" class="text-vtgCyan">
+                <span class="text-[10px] font-bold text-white">Unloaded</span>
+              </label>
+              <label class="flex items-center gap-1.5 bg-slate-900 border border-slate-700 rounded p-1.5 cursor-pointer hover:border-vtgCyan">
+                <input type="radio" name="wagonStatus" value="L" onchange="window.runDecisionEngine()" class="text-vtgCyan">
+                <span class="text-[10px] font-bold text-white">Loaded</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. INTERVENTION SELECTION -->
+        <div class="bg-black/30 border border-slate-700/60 rounded-lg p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-white flex items-center gap-1.5"><i data-lucide="wrench" class="w-4 h-4 text-vtgCyan"></i> 2. Intervention (J14:AG14)</span>
+          </div>
+          <div>
+            <select id="interventionSelect" onchange="window.onInterventionSelected(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-[11px] text-white focus:border-vtgCyan outline-none"></select>
+          </div>
+          <div id="adHocConfirmBox" class="hidden bg-amber-500/10 border border-amber-500/30 rounded p-2 flex items-start gap-2">
+            <input type="checkbox" id="adHocConfirm" onchange="window.runDecisionEngine()" class="mt-0.5">
+            <label for="adHocConfirm" class="text-[10px] text-amber-300 font-medium cursor-pointer leading-tight">
+              I manually confirm that this intervention (INT-01 to INT-10) can be safely performed at the selected ad-hoc location.
+            </label>
+          </div>
+          <div id="interventionStatusBox" class="p-2 rounded border text-xs flex items-start gap-2 mt-2"></div>
+        </div>
+
+        <!-- 3. SITE MODE -->
+        <div class="bg-black/30 border border-slate-700/60 rounded-lg p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-bold text-white flex items-center gap-1.5"><i data-lucide="map" class="w-4 h-4 text-emerald-400"></i> 3. Maintenance Location Mode</span>
+          </div>
+          <div class="flex bg-slate-900 rounded p-1 border border-slate-700 text-[11px]">
+            <label class="flex-1 flex items-center justify-center gap-2 py-1.5 cursor-pointer rounded bg-vtgBlue text-white font-bold" id="lblModeReg">
+              <input type="radio" name="siteMode" value="registered" checked onchange="window.toggleSiteMode()" class="hidden">
+              Registered MoMa Site
+            </label>
+            <label class="flex-1 flex items-center justify-center gap-2 py-1.5 cursor-pointer rounded text-slate-400 hover:text-white transition" id="lblModeAdHoc">
+              <input type="radio" name="siteMode" value="adhoc" onchange="window.toggleSiteMode()" class="hidden">
+              Ad-Hoc
+            </label>
+          </div>
+          <div class="text-[10px] text-slate-400 leading-tight">
+            <span id="txtModeDesc">System matches wagon GPS to registered sites in 50km radius.</span>
+          </div>
+        </div>
+
+        <!-- 4. SUMMARY -->
+        <div class="bg-black/30 border border-slate-700/60 rounded-lg p-3.5 space-y-1.5">
+          <div class="flex items-center justify-between text-xs mb-1">
+            <span class="font-bold text-white">Matching Summary</span>
+            <span id="badgeFeasibility" class="px-2 py-0.5 rounded text-[10px] font-bold"></span>
+          </div>
+          <div class="text-[11px] space-y-1 text-slate-300">
+            <div class="flex justify-between" id="rowSitesInRadius"><span class="text-slate-400">Sites in 50km Radius:</span><span id="txtSitesInRadius" class="font-bold text-white">0</span></div>
+            <div class="flex justify-between" id="rowQualifiedSites"><span class="text-slate-400">Fully Qualified Sites:</span><span id="txtQualifiedSites" class="font-bold text-emerald-400">0</span></div>
+            <div class="flex justify-between"><span class="text-slate-400">Available Mobile Suppliers:</span><span id="txtMatchedSuppliers" class="font-bold text-vtgCyan">0</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="p-3 bg-black/40 border-t border-vtgBlue/30 flex-shrink-0 space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-400">Target Decision:</span>
+          <span id="txtRecommendedAction" class="font-bold text-emerald-400 uppercase tracking-wide">...</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="window.copyWamosComment()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-1.5 rounded text-[11px] flex items-center justify-center gap-1.5 transition">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i> WAMOS Copy
+          </button>
+          <button onclick="window.sendSimulatedEmail()" class="bg-vtgBlue hover:bg-vtgCyan text-white font-bold py-1.5 rounded text-[11px] flex items-center justify-center gap-1.5 transition shadow-md">
+            <i data-lucide="mail" class="w-3.5 h-3.5"></i> E-Mail Order
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN -->
+    <main class="flex-1 flex flex-col relative overflow-hidden bg-slate-900">
+      <div class="absolute top-4 left-4 z-[500] bg-vtgNavy/90 backdrop-blur border border-vtgBlue/40 rounded-lg p-3 shadow-2xl text-[10px] space-y-1.5 pointer-events-auto max-w-xs">
+        <div class="font-bold text-white text-xs mb-1">Map Legend</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-vtgOrange border border-white"></span> Defective Wagon</div>
+        <div class="flex items-center gap-1.5" id="lgdSite1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></span> Qualified Site</div>
+        <div class="flex items-center gap-1.5" id="lgdSite2"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 border border-white"></span> Site Constraint</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-vtgBlue border border-white"></span> Mobile Supplier</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 border border-white"></span> Stationary Workshop (Fallback)</div>
+        <div class="text-slate-400 pt-1 border-t border-slate-700/50 mt-1">OpenRailwayMap (requires localhost or cloud).</div>
+      </div>
+      <div id="map" class="flex-1"></div>
+
+      <!-- BOTTOM ACCORDION -->
+      <div class="h-64 bg-vtgNavy/95 border-t border-vtgBlue/40 flex flex-col z-20 shadow-2xl">
+        <div class="flex items-center px-4 py-1.5 border-b border-vtgBlue/20 bg-black/30 flex-shrink-0 gap-2">
+          <button id="tabBtnSites" onclick="window.switchResultTab('sites')" class="px-3 py-1 text-[11px] font-bold rounded bg-vtgBlue text-white border border-vtgCyan/30">Sites (<span id="tabCountSites">0</span>)</button>
+          <button id="tabBtnSuppliers" onclick="window.switchResultTab('suppliers')" class="px-3 py-1 text-[11px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700">Suppliers (<span id="tabCountSuppliers">0</span>)</button>
+          <button id="tabBtnFallback" onclick="window.switchResultTab('fallback')" class="px-3 py-1 text-[11px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700">Stationary Fallback</button>
+          <button id="tabBtnDispatch" onclick="window.switchResultTab('dispatch')" class="px-3 py-1 text-[11px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700">Dispatch Details</button>
+        </div>
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-2">
+          <div id="tabContentSites" class="space-y-1">
+            <table class="w-full text-left text-[11px] border-collapse">
+              <thead><tr class="border-b border-slate-700 text-slate-400 text-[10px] uppercase">
+                <th class="py-1 px-2">Site Name</th><th class="py-1 px-2">Type</th><th class="py-1 px-2">Dist</th><th class="py-1 px-2">Suitability</th><th class="py-1 px-2">RID</th><th class="py-1 px-2">Approved</th><th class="py-1 px-2">Action</th>
+              </tr></thead>
+              <tbody id="tbodySites" class="divide-y divide-slate-800/60"></tbody>
+            </table>
+          </div>
+          <div id="tabContentSuppliers" class="hidden space-y-1">
+            <table class="w-full text-left text-[11px] border-collapse">
+              <thead><tr class="border-b border-slate-700 text-slate-400 text-[10px] uppercase">
+                <th class="py-1 px-2">Supplier Workshop</th><th class="py-1 px-2">City</th><th class="py-1 px-2">Dist to Site</th><th class="py-1 px-2">Limit</th><th class="py-1 px-2">Contact</th><th class="py-1 px-2">Assignment</th>
+              </tr></thead>
+              <tbody id="tbodySuppliers" class="divide-y divide-slate-800/60"></tbody>
+            </table>
+          </div>
+          <div id="tabContentFallback" class="hidden p-3 text-[11px]">
+             <div class="bg-rose-500/10 border border-rose-500/30 rounded p-3" id="fallbackInfoBox">
+                <h4 class="font-bold text-rose-400 mb-1">Stationary Workshop Required</h4>
+                <p class="text-slate-300 mb-2">Mobile intervention is not feasible due to constraints (C-U-L failure, or missing site/supplier). Recommended target:</p>
+                <div id="txtFallbackTarget" class="font-bold text-white text-sm bg-black/40 px-2 py-1 rounded inline-block"></div>
+                <div id="txtFallbackDist" class="text-slate-400 mt-1"></div>
+             </div>
+          </div>
+          <div id="tabContentDispatch" class="hidden grid grid-cols-3 gap-3 text-[11px] p-1">
+            <div class="bg-black/30 border border-slate-700 rounded p-2">
+              <div class="text-[9px] text-slate-400 uppercase font-bold">Target Wagon & Location</div>
+              <div id="planWagonNumber" class="font-bold text-white text-xs mt-0.5">-</div>
+              <div id="planIntervention" class="text-vtgCyan font-medium mt-1">-</div>
+              <div id="planWagonState" class="text-slate-300 mt-0.5">-</div>
+              <div id="planWagonGPS" class="text-slate-400 font-mono mt-1 pt-1 border-t border-slate-700">-</div>
+            </div>
+            <div class="bg-black/30 border border-slate-700 rounded p-2">
+              <div class="text-[9px] text-slate-400 uppercase font-bold">Maintenance Site</div>
+              <div id="planSiteName" class="font-bold text-emerald-400 text-xs mt-0.5">-</div>
+              <div id="planSiteType" class="text-slate-300 mt-1">-</div>
+              <div id="planSiteContacts" class="text-slate-400 text-[10px] mt-1 space-y-0.5"></div>
+            </div>
+            <div class="bg-black/30 border border-slate-700 rounded p-2">
+              <div class="text-[9px] text-slate-400 uppercase font-bold">Assigned Supplier / Fallback</div>
+              <div id="planSupplierName" class="font-bold text-xs text-white mt-0.5">-</div>
+              <div id="planSupplierDetail" class="text-slate-300 mt-1">-</div>
+              <div class="mt-2" id="planSupplierBadgeBox"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 right-6 z-[600] bg-slate-900 border border-vtgCyan text-white px-4 py-2.5 rounded-lg shadow-2xl text-xs flex items-center gap-2 transition-all transform translate-y-20 opacity-0">
+    <i data-lucide="info" class="w-4 h-4 text-vtgCyan"></i><span id="toastMsg">Notification</span>
+  </div>
+
+  <script>
+    // --- GLOABLE FUNKTIONEN FÜR HTML BUTTONS ---
+    window.onWagonSearch = function(inputVal) {
+      const cleanInput = inputVal.replace(/[\s-]/g, ''); 
+      let w = null;
+      for (let i = 0; i < State.wagons.length; i++) {
+          if (State.wagons[i].wagon_number === cleanInput) { w = State.wagons[i]; break; }
+      }
+      if (w) { 
+        document.getElementById('wagonErrorMsg').classList.add('hidden');
+        document.getElementById('wagonInput').value = w.wagon_number_formatted;
+        document.getElementById('txtWagonType').textContent = w.uic_type + " (" + w.vtg_type + ")";
+        State.currentWagon = w; 
+        window.setWagonPosition(w.lat, w.lng, true); 
+      } else {
+        document.getElementById('wagonErrorMsg').classList.remove('hidden');
+      }
+    };
+
+    window.onNHMSearch = function(inputVal) {
+       const code = inputVal.split(' ')[0];
+       let n = null;
+       for (let i = 0; i < State.nhmList.length; i++) {
+           if (State.nhmList[i].nhm_code === code || State.nhmList[i].nhm_code === inputVal) { n = State.nhmList[i]; break; }
+       }
+       if (n) { document.getElementById('inputLadegutDesc').value = n.description; }
+    };
+    
+    window.setWagonPosition = function(lat, lng, center) { 
+      State.currentLat = lat; State.currentLng = lng; 
+      document.getElementById('inputLat').value = lat.toFixed(4); 
+      document.getElementById('inputLng').value = lng.toFixed(4); 
+      if (center && map) { map.panTo([lat,lng]); }
+      window.runDecisionEngine(); 
+    };
+    
+    window.updateWagonPositionManual = function() { 
+        window.setWagonPosition(parseFloat(document.getElementById('inputLat').value), parseFloat(document.getElementById('inputLng').value), true); 
+    };
+    
+    window.onInterventionSelected = function(id) { 
+        let inter = null;
+        for (let i = 0; i < INTERVENTIONS_DEF.length; i++) {
+            if (INTERVENTIONS_DEF[i].id === id) { inter = INTERVENTIONS_DEF[i]; break; }
+        }
+        State.currentIntervention = inter; 
+        window.runDecisionEngine(); 
+    };
+    
+    window.switchResultTab = function(k) {
+      const tabs = ['sites', 'suppliers', 'fallback', 'dispatch'];
+      for (let i = 0; i < tabs.length; i++) {
+          const cap = tabs[i].charAt(0).toUpperCase() + tabs[i].slice(1);
+          document.getElementById("tabContent" + cap).classList.add('hidden'); 
+          document.getElementById("tabBtn" + cap).className = "px-3 py-1 text-[11px] font-bold rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700"; 
+      }
+      const capK = k.charAt(0).toUpperCase() + k.slice(1);
+      document.getElementById("tabContent" + capK).classList.remove('hidden'); 
+      document.getElementById("tabBtn" + capK).className = "px-3 py-1 text-[11px] font-bold rounded bg-vtgBlue text-white border border-vtgCyan/30";
+    };
+
+    window.resetDefaults = function() {
+      if(State.wagons.length > 0) {
+        document.getElementById('wagonInput').value = State.wagons[0].wagon_number_formatted;
+        window.onWagonSearch(State.wagons[0].wagon_number);
+      }
+      document.getElementById('interventionSelect').value = "INT-01";
+      window.onInterventionSelected("INT-01");
+      document.querySelector('input[name="wagonStatus"][value="U"]').checked = true;
+      document.querySelector('input[name="siteMode"][value="registered"]').checked = true;
+      window.toggleSiteMode();
+      showToast("Reset to default parameters");
+    };
+
+    window.toggleSiteMode = function() {
+      State.siteMode = document.querySelector('input[name="siteMode"]:checked').value;
+      const lblReg = document.getElementById('lblModeReg'), lblAdHoc = document.getElementById('lblModeAdHoc');
+      if (State.siteMode === 'registered') {
+        lblReg.className = "flex-1 flex items-center justify-center gap-2 py-1.5 cursor-pointer rounded bg-vtgBlue text-white font-bold";
+        lblAdHoc.className = "flex-1 flex items-center justify-center gap-2 py-1.5 cursor-pointer rounded text-slate-400 hover:text-white transition";
+        document.getElementById('adHocConfirmBox').classList.add('hidden');
+        document.getElementById('txtModeDesc').textContent = "System matches wagon GPS to registered sites in 50km radius.";
+        
+        document.getElementById('rowSitesInRadius').style.display = 'flex';
+        document.getElementById('rowQualifiedSites').style.display = 'flex';
+        document.getElementById('lgdSite1').style.display = 'flex';
+        
+        document.getElementById('lgdSite2').innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-amber-500 border border-white"></span> Site Constraint';
+        document.getElementById('tabBtnSites').style.display = 'block';
+        window.switchResultTab('sites');
+      } else {
+        lblAdHoc.className = "flex-1 flex items-center justify-center gap-2 py-1.5 cursor-pointer rounded bg-amber-600 text-white font-bold";
+        lblReg.className = "flex-1 flex items-center justify-center gap-2 py-1.5 cursor-pointer rounded text-slate-400 hover:text-white transition";
+        document.getElementById('txtModeDesc').textContent = "Ad-Hoc: Pin location serves directly as intervention site. Only INT-01 to INT-10 allowed.";
+        
+        document.getElementById('rowSitesInRadius').style.display = 'none';
+        document.getElementById('rowQualifiedSites').style.display = 'none';
+        document.getElementById('lgdSite1').style.display = 'none';
+        
+        document.getElementById('lgdSite2').innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-amber-500 border border-white"></span> Ad-Hoc Intervention Pin';
+        document.getElementById('tabBtnSites').style.display = 'none';
+        window.switchResultTab('suppliers');
+      }
+      window.runDecisionEngine();
+    };
+
+    window.runDecisionEngine = function() {
+      if (!State.currentWagon) return;
+      const wagon = State.currentWagon;
+      const status = document.querySelector('input[name="wagonStatus"]:checked').value;
+      const intervention = State.currentIntervention;
+      State.currentStatus = status;
+      const isRID = wagon.danger_goods === true;
+      const intNumber = parseInt(intervention.id.split('-')[1], 10);
+      const allowedStr = wagon.cul_matrix ? (wagon.cul_matrix[intervention.id] || "N/A") : "N/A";
+      
+      let isFeasible = true, feasibilityReason = "Permitted for state.", statusColor = "bg-emerald-500/10 text-emerald-300 border-emerald-500/30", iconHtml = '&#9989;';
+
+      if (State.siteMode === 'adhoc') {
+        if (intNumber > 10) {
+          isFeasible = false; feasibilityReason = "Heavy repairs/revisions prohibited Ad-Hoc."; statusColor = "bg-rose-500/20 text-rose-300 border-rose-500/40"; iconHtml = '&#10060;';
+          document.getElementById('adHocConfirmBox').classList.add('hidden');
+        } else {
+          document.getElementById('adHocConfirmBox').classList.remove('hidden');
+          if (!document.getElementById('adHocConfirm').checked) {
+            isFeasible = false; feasibilityReason = "Manual Ad-Hoc confirmation required."; statusColor = "bg-amber-500/20 text-amber-300 border-amber-500/40"; iconHtml = '&#9888;';
+          }
+        }
+      } else {
+        document.getElementById('adHocConfirmBox').classList.add('hidden');
+      }
+
+      if (isFeasible) {
+        if (allowedStr === "N/A" || allowedStr === "NA") { 
+            isFeasible = false; feasibilityReason = "Not feasible as mobile maintenance."; statusColor = "bg-rose-500/20 text-rose-300 border-rose-500/40"; iconHtml = '&#10060;';
+        } else if (allowedStr.indexOf(status) === -1) {
+            isFeasible = false; feasibilityReason = "Wagon state " + status + " not permitted. Requires: " + allowedStr; statusColor = "bg-rose-500/20 text-rose-300 border-rose-500/40"; iconHtml = '&#10060;';
+        } else if (intervention.id === "INT-05" && status === "L") { 
+            feasibilityReason = "Permitted while Loaded ONLY for 4.6.2 defects."; statusColor = "bg-amber-500/20 text-amber-300 border-amber-500/40"; iconHtml = '&#9888;';
+        }
+      }
+
+      const box = document.getElementById('interventionStatusBox');
+      box.className = "p-2 rounded border text-xs flex items-start gap-2 mt-2 " + statusColor;
+      box.innerHTML = '<div class="mt-0.5 text-sm">' + iconHtml + '</div><div><div class="font-bold">' + intervention.id + '</div><div class="text-[10px] mt-0.5">' + feasibilityReason + ' (Matrix: ' + allowedStr + ')</div></div>';
+      document.getElementById('badgeFeasibility').className = "px-2 py-0.5 rounded text-[10px] font-bold " + (isFeasible ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300');
+      document.getElementById('badgeFeasibility').textContent = isFeasible ? "Mobile Feasible" : "Stationary Required";
+
+      State.sitesInRadius = []; State.qualifiedSites = [];
+      if (State.siteMode === 'registered') {
+        for (let i = 0; i < State.sites.length; i++) {
+          let site = State.sites[i];
+          site.isWorkApproved = site.approved_interventions && site.approved_interventions.includes(intervention.id);
+          if (!site.isWorkApproved) continue; 
+          
+          site.currentDist = calculateDistanceKm(State.currentLat, State.currentLng, site.lat, site.lng);
+          if (site.currentDist <= State.searchRadiusKm) {
+            State.sitesInRadius.push(site);
+            site.isRIDOk = !isRID || site.rid_accepted;
+            if (site.isRIDOk && isFeasible) State.qualifiedSites.push(site);
+          }
+        }
+        State.sitesInRadius.sort(function(a, b) { return a.currentDist - b.currentDist; });
+        State.qualifiedSites.sort(function(a, b) { return a.currentDist - b.currentDist; });
+        
+        let foundSite = false;
+        if (State.selectedSite) {
+            for(let j=0; j<State.sitesInRadius.length; j++) {
+                if(State.sitesInRadius[j].site_id === State.selectedSite.site_id) { foundSite = true; break; }
+            }
+        }
+        if (!foundSite) {
+          State.selectedSite = State.qualifiedSites.length > 0 ? State.qualifiedSites[0] : null;
+        }
+      } else {
+        State.selectedSite = { site_id: 'ADHOC', name: "Ad-Hoc Pin Location", type: "Ad-Hoc", lat: State.currentLat, lng: State.currentLng, contacts: [], isWorkApproved: true, isRIDOk: true };
+      }
+
+      let siteFeasible = State.selectedSite && State.selectedSite.isWorkApproved && State.selectedSite.isRIDOk;
+
+      State.matchedSuppliers = [];
+      if (State.selectedSite && isFeasible && siteFeasible) {
+        for (let k = 0; k < State.suppliers.length; k++) {
+          let sup = State.suppliers[k];
+          sup.distToSite = calculateDistanceKm(State.selectedSite.lat, State.selectedSite.lng, sup.lat, sup.lng);
+          if (sup.distToSite <= sup.radius_km && sup.certified_interventions && sup.certified_interventions.includes(intervention.id)) {
+            State.matchedSuppliers.push(sup);
+          }
+        }
+        State.matchedSuppliers.sort(function(a, b) { return a.distToSite - b.distToSite; });
+      }
+      
+      let existingSup = null;
+      if (State.selectedSupplier) {
+          for(let s=0; s<State.matchedSuppliers.length; s++) {
+              if(State.matchedSuppliers[s].supplier_id === State.selectedSupplier.supplier_id) { existingSup = State.matchedSuppliers[s]; break; }
+          }
+      }
+      State.selectedSupplier = existingSup ? existingSup : (State.matchedSuppliers.length > 0 ? State.matchedSuppliers[0] : null);
+
+      State.isFallbackActive = false;
+      if (!isFeasible || !siteFeasible || State.matchedSuppliers.length === 0) {
+         State.isFallbackActive = true;
+         let closest = null, minDist = 99999;
+         for (let w = 0; w < State.statWorkshops.length; w++) {
+            let sw = State.statWorkshops[w];
+            const d = calculateDistanceKm(State.currentLat, State.currentLng, sw.lat, sw.lng);
+            if (d < minDist) { minDist = d; sw.dist = d; closest = sw; }
+         }
+         State.fallbackWorkshop = closest;
+      }
+
+      document.getElementById('txtSitesInRadius').textContent = State.sitesInRadius.length;
+      document.getElementById('txtQualifiedSites').textContent = State.qualifiedSites.length;
+      document.getElementById('txtMatchedSuppliers').textContent = State.matchedSuppliers.length;
+      document.getElementById('tabCountSites').textContent = State.sitesInRadius.length;
+      document.getElementById('tabCountSuppliers').textContent = State.matchedSuppliers.length;
+
+      const act = document.getElementById('txtRecommendedAction');
+      if (State.isFallbackActive) {
+          act.textContent = "Route to Stationary"; act.className = "font-bold text-rose-400 uppercase tracking-wide";
+          window.switchResultTab('fallback');
+      } else {
+          act.textContent = "Dispatch Feasible"; act.className = "font-bold text-emerald-400 uppercase tracking-wide";
+          if (!document.getElementById('tabContentFallback').classList.contains('hidden')) {
+              window.switchResultTab(State.siteMode === 'registered' ? 'sites' : 'suppliers');
+          }
+      }
+
+      renderMapMarkers(); 
+      renderTables(); 
+      renderDispatchSummary();
+    };
+
+    window.selectSiteById = function(id) { 
+        let s = null;
+        for (let i = 0; i < State.sites.length; i++) {
+            if (State.sites[i].site_id === id) { s = State.sites[i]; break; }
+        }
+        if(s){ State.selectedSite = s; window.runDecisionEngine(); showToast("Site selected: " + s.name); } 
+    };
+    
+    window.selectSupplierById = function(id) { 
+        let s = null;
+        for (let i = 0; i < State.suppliers.length; i++) {
+            if (State.suppliers[i].supplier_id === id) { s = State.suppliers[i]; break; }
+        }
+        if(s){ State.selectedSupplier = s; window.runDecisionEngine(); showToast("Supplier assigned: " + s.name); } 
+    };
+
+    window.copyWamosComment = function() {
+      if(!State.isFallbackActive && !State.selectedSupplier) { showToast("Select supplier first!"); return; }
+      const txt = buildOrderText(getFormValues(), false);
+      navigator.clipboard.writeText(txt).then(function() { showToast("WAMOS Copied!"); }).catch(function() { alert("Copy failed."); });
+      State.history.push({date: new Date().toLocaleString(), wagon: State.currentWagon.wagon_number_formatted, action: State.isFallbackActive ? 'STATIONARY' : 'MOBILE'});
+    };
+
+    window.sendSimulatedEmail = function() {
+      if(!State.isFallbackActive && !State.selectedSupplier) { showToast("Select supplier first!"); return; }
+      const subject = encodeURIComponent("MoMa Order: " + State.currentWagon.wagon_number_formatted + " - " + State.currentIntervention.id);
+      const body = encodeURIComponent(buildOrderText(getFormValues(), true));
+      window.location.href = "mailto:lutz.freytag@outlook.de,christian.kuhn@gmx.com?subject=" + subject + "&body=" + body;
+      showToast("Email client opened!");
+    };
+
+    window.exportHistoryCSV = function() {
+      if(State.history.length === 0) { showToast("No history yet."); return; }
+      const NL = "\n";
+      let csv = "Timestamp,Wagon,Action" + NL;
+      for (let i = 0; i < State.history.length; i++) {
+          let r = State.history[i];
+          csv += '"' + r.date + '",' + r.wagon + ',' + r.action + NL;
+      }
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+      link.download = "moma_dispatch_history.csv";
+      link.click();
+    };
+
+    // --- INTERNE FUNKTIONEN ---
+    const INTERVENTIONS_DEF = [
+      { id: "INT-01", name: "Preventive" }, { id: "INT-02", name: "Light repair - only 1.8.1.3" }, { id: "INT-03", name: "Light repair - only 2.5.5" },
+      { id: "INT-04", name: "Light repair - all case except 3.2.4" }, { id: "INT-05", name: "Light repair - only 4.6.2 4.8" }, { id: "INT-06", name: "Light repair - only 5.2.3.1 5.6" },
+      { id: "INT-07", name: "Light Repair - Super-structure - Welding" }, { id: "INT-08", name: "Light Repair - Super-structure - Equip Change" }, { id: "INT-09", name: "Light Repair - Super-structure - Stickers" },
+      { id: "INT-10", name: "Underframe - GPS Connect & sensors" }, { id: "INT-11", name: "RAM/HERR 02 04 without revision" }, { id: "INT-12", name: "RAM / HERR 05" },
+      { id: "INT-13", name: "MRE" }, { id: "INT-14", name: "G481" }, { id: "INT-15", name: "JNS Wheels control" },
+      { id: "INT-16", name: "Heavy repair - 1 - Running gear" }, { id: "INT-17", name: "Heavy repair - 2 - Suspension" }, { id: "INT-18", name: "Heavy repair - Only 3.2.4" },
+      { id: "INT-19", name: "Heavy repair - 4 - Underframe / Bogie" }, { id: "INT-20", name: "Heavy repair - 5 - Buffing & Draw gear" }, { id: "INT-21", name: "Revision G4.2 / G4.8" },
+      { id: "INT-22", name: "Revision G4.0" }, { id: "INT-23", name: "Tank Test Z" }, { id: "INT-24", name: "Tank Test W" }
+    ];
+
+    const State = {
+      wagons: [], sites: [], suppliers: [], statWorkshops: [], nhmList: [],
+      currentWagon: null, currentLat: 0.0, currentLng: 0.0, currentStatus: "U", currentIntervention: INTERVENTIONS_DEF[0], siteMode: "registered",
+      searchRadiusKm: 50, sitesInRadius: [], qualifiedSites: [], matchedSuppliers: [],
+      selectedSite: null, selectedSupplier: null, fallbackWorkshop: null, isFallbackActive: false, history: []
+    };
+    
+    let map = null, wagonMarker, radiusCircle, siteMarkersGroup, supplierMarkersGroup, fallbackMarker, routeLine;
+
+    function initMap() {
+      try {
+          if (typeof L === 'undefined') {
+              document.getElementById('map').innerHTML = '<div class="text-rose-400 p-4">FEHLER: Leaflet Karte (L) blockiert.</div>';
+              return;
+          }
+          document.getElementById('map').innerHTML = '';
+          map = L.map('map', {zoomControl: true, attributionControl: true}).setView([State.currentLat, State.currentLng], 7);
+          
+          const osmDe = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', { maxZoom: 19, attribution: 'OSM DE' });
+          osmDe.addTo(map);
+          
+          let baseLayers = {"OSM (DE)": osmDe};
+          let overlays = {};
+
+          if (window.location.protocol !== 'file:') {
+              const orm = L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', { 
+                  maxZoom: 19, 
+                  attribution: 'OpenRailwayMap',
+                  crossOrigin: true
+              });
+              overlays["OpenRailwayMap Overlay"] = orm;
+          }
+          
+          L.control.layers(baseLayers, overlays, {position: 'topright'}).addTo(map);
+
+          siteMarkersGroup = L.featureGroup().addTo(map);
+          supplierMarkersGroup = L.featureGroup().addTo(map);
+          radiusCircle = L.circle([State.currentLat, State.currentLng], { radius: State.searchRadiusKm * 1000, color: '#00A3E0', weight: 2, dashArray: '6, 6', fillColor: '#00A3E0', fillOpacity: 0.08 }).addTo(map);
+
+          const wHtml = '<div class="wagon-ping" style="position:absolute; background-color:#FF5800; width:32px; height:32px; border-radius:50%; left:-4px; top:-4px; z-index:-1;"></div><div style="background-color:#FF5800; width:24px; height:24px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 10px rgba(255,88,0,0.8); display:flex; align-items:center; justify-content:center; color:white; font-size:12px; font-weight:bold; line-height:20px;">V</div>';
+          wagonMarker = L.marker([State.currentLat, State.currentLng], { icon: L.divIcon({ className: 'custom-wagon-icon', html: wHtml, iconSize: [24,24], iconAnchor: [12,12] }), draggable: true, zIndexOffset: 1000 }).addTo(map);
+          
+          const sHtml = '<div style="background:#e11d48; width:16px; height:16px; border-radius:3px; border:2px solid #fff;"></div>';
+          fallbackMarker = L.marker([0,0], {icon: L.divIcon({ className:'stat-icon', html: sHtml, iconSize:[16,16], iconAnchor:[8,8] })}).bindPopup('<b>Stationary Fallback</b>');
+
+          wagonMarker.on('dragend', function(e) { window.setWagonPosition(e.target.getLatLng().lat, e.target.getLatLng().lng, false); });
+          map.on('click', function(e) { window.setWagonPosition(e.latlng.lat, e.latlng.lng, false); });
+      } catch (err) { console.error(err); }
+    }
+
+    function calculateDistanceKm(lat1, lon1, lat2, lon2) {
+      const R = 6371, dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180;
+      const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+      return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)) * 10) / 10;
+    }
+
+    function renderMapMarkers() {
+      if (!map) return;
+      wagonMarker.setLatLng([State.currentLat, State.currentLng]);
+      radiusCircle.setLatLng([State.currentLat, State.currentLng]);
+      radiusCircle.setRadius(State.siteMode === 'registered' ? State.searchRadiusKm * 1000 : 0);
+      siteMarkersGroup.clearLayers();
+      supplierMarkersGroup.clearLayers();
+
+      if (State.siteMode === 'registered' && !State.isFallbackActive) {
+        for (let i = 0; i < State.sitesInRadius.length; i++) {
+          let site = State.sitesInRadius[i];
+          const isSel = State.selectedSite && State.selectedSite.site_id === site.site_id;
+          const sz = isSel ? 20 : 14;
+          const hStr = '<div style="background:'+ (site.isWorkApproved && site.isRIDOk ? '#10b981' : '#f59e0b') +'; width:'+sz+'px; height:'+sz+'px; border-radius:50%; border:2px solid #fff;"></div>';
+          siteMarkersGroup.addLayer(L.marker([site.lat, site.lng], {icon: L.divIcon({ className:'s-icon', html: hStr, iconSize:[sz,sz], iconAnchor:[sz/2,sz/2] })})
+            .bindPopup('<b>'+site.name+'</b><br><button onclick="window.selectSiteById(\''+site.site_id+'\')" class="mt-1 bg-vtgBlue text-white px-2 py-0.5 rounded text-[10px]">Select</button>'));
+        }
+      }
+
+      if (!State.isFallbackActive) {
+        for (let j = 0; j < State.matchedSuppliers.length; j++) {
+          let sup = State.matchedSuppliers[j];
+          const isSel = State.selectedSupplier && State.selectedSupplier.supplier_id === sup.supplier_id;
+          const hStr = '<div style="background:'+ (isSel ? '#FF5800' : '#00A3E0') +'; width:14px; height:14px; border-radius:3px; border:2px solid #fff;"></div>';
+          supplierMarkersGroup.addLayer(L.marker([sup.lat, sup.lng], {icon: L.divIcon({ className:'sup-icon', html: hStr, iconSize:[14,14], iconAnchor:[7,7] })})
+            .bindPopup('<b>'+sup.name+'</b><br>Base: '+sup.city+'<br>Dist to Site: '+sup.distToSite+'km<br><button onclick="window.selectSupplierById(\''+sup.supplier_id+'\')" class="mt-1 bg-vtgOrange text-white px-2 py-0.5 rounded text-[10px]">Assign</button>'));
+        }
+      }
+
+      if (routeLine) { map.removeLayer(routeLine); }
+      if (State.isFallbackActive && State.fallbackWorkshop) {
+         fallbackMarker.setLatLng([State.fallbackWorkshop.lat, State.fallbackWorkshop.lng]);
+         if (!map.hasLayer(fallbackMarker)) { fallbackMarker.addTo(map); }
+         routeLine = L.polyline([[State.currentLat, State.currentLng], [State.fallbackWorkshop.lat, State.fallbackWorkshop.lng]], {color: '#e11d48', weight: 2.5, dashArray: '5, 8'}).addTo(map);
+      } else {
+         if (map.hasLayer(fallbackMarker)) { map.removeLayer(fallbackMarker); }
+         if (State.selectedSite && State.selectedSupplier) {
+            routeLine = L.polyline([[State.currentLat, State.currentLng], [State.selectedSite.lat, State.selectedSite.lng], [State.selectedSupplier.lat, State.selectedSupplier.lng]], {color: '#00A3E0', weight: 2.5, dashArray: '5, 8'}).addTo(map);
+         }
+      }
+    }
+
+    function renderTables() {
+      let siteRows = [];
+      for (let i = 0; i < State.sitesInRadius.length; i++) {
+          let site = State.sitesInRadius[i];
+          const isSel = State.selectedSite && State.selectedSite.site_id === site.site_id;
+          siteRows.push('<tr class="hover:bg-slate-800/60 cursor-pointer ' + (isSel ? 'bg-vtgBlue/20' : '') + '" ondblclick="map.setView([' + site.lat + ',' + site.lng + '],13)">' +
+          '<td class="py-1.5 px-2">' + site.name + '</td><td class="py-1.5 px-2">' + site.type + '</td><td class="py-1.5 px-2">' + site.currentDist + 'km</td>' +
+          '<td class="py-1.5 px-2">A</td><td class="py-1.5 px-2">' + (site.rid_accepted ? 'Y' : 'N') + '</td><td class="py-1.5 px-2">' + (site.isWorkApproved ? 'Y' : 'N') + '</td>' +
+          '<td class="py-1.5 px-2"><button onclick="window.selectSiteById(\'' + site.site_id + '\')" class="px-2 py-0.5 rounded text-[9px] ' + (isSel ? 'bg-vtgCyan text-black font-bold' : 'bg-slate-700 text-white') + '">' + (isSel ? 'Selected' : 'Select') + '</button></td></tr>');
+      }
+      document.getElementById('tbodySites').innerHTML = siteRows.join('');
+      
+      let supRows = [];
+      for (let j = 0; j < State.matchedSuppliers.length; j++) {
+          let sup = State.matchedSuppliers[j];
+          const isSel = State.selectedSupplier && State.selectedSupplier.supplier_id === sup.supplier_id;
+          let cArr = [];
+          if(sup.phone) cArr.push(sup.phone);
+          if(sup.email) cArr.push(sup.email);
+          supRows.push('<tr class="hover:bg-slate-800/60 cursor-pointer ' + (isSel ? 'bg-vtgBlue/20' : '') + '">' +
+          '<td class="py-1.5 px-2">' + sup.name + '</td><td class="py-1.5 px-2">' + sup.city + '</td><td class="py-1.5 px-2">' + sup.distToSite + 'km</td>' +
+          '<td class="py-1.5 px-2">' + sup.radius_km + 'km</td><td class="py-1.5 px-2 text-[9px] text-slate-400">' + cArr.join(' / ') + '</td>' +
+          '<td class="py-1.5 px-2"><button onclick="window.selectSupplierById(\'' + sup.supplier_id + '\')" class="px-2 py-0.5 rounded text-[9px] ' + (isSel ? 'bg-emerald-500 text-white font-bold' : 'bg-vtgOrange hover:bg-orange-600 text-white') + '">' + (isSel ? 'Assigned' : 'Assign') + '</button></td></tr>');
+      }
+      document.getElementById('tbodySuppliers').innerHTML = supRows.join('');
+
+      if (State.fallbackWorkshop) {
+         document.getElementById('txtFallbackTarget').textContent = State.fallbackWorkshop.name + ", " + State.fallbackWorkshop.city;
+         document.getElementById('txtFallbackDist').textContent = "Distance: " + State.fallbackWorkshop.dist + " km (Euclidean)";
+      }
+    }
+
+    function renderDispatchSummary() {
+      if(!State.currentWagon) return;
+      document.getElementById('planWagonNumber').textContent = State.currentWagon.wagon_number_formatted;
+      document.getElementById('planIntervention').textContent = State.currentIntervention.id;
+      document.getElementById('planWagonState').textContent = "Status: " + State.currentStatus + " | RID: " + (State.currentWagon.danger_goods ? 'YES' : 'NO');
+      document.getElementById('planWagonGPS').textContent = "Wagon GPS: " + State.currentLat.toFixed(4) + ", " + State.currentLng.toFixed(4);
+
+      if (State.isFallbackActive && State.fallbackWorkshop) {
+          document.getElementById('planSiteName').textContent = "---";
+          document.getElementById('planSiteType').textContent = "";
+          document.getElementById('planSiteContacts').innerHTML = "";
+          document.getElementById('planSupplierName').textContent = "STATIONARY WORKSHOP";
+          document.getElementById('planSupplierDetail').textContent = State.fallbackWorkshop.name + " (" + State.fallbackWorkshop.dist + "km)";
+          document.getElementById('planSupplierBadgeBox').innerHTML = "";
+      } else {
+          if (State.selectedSite) {
+            let warn = "";
+            if (State.selectedSite.site_id !== 'ADHOC') {
+               if (!State.selectedSite.isWorkApproved) { warn += " \u274C Int. Not Approved"; }
+               if (!State.selectedSite.isRIDOk) { warn += " \u274C RID Not Allowed"; }
+            }
+            document.getElementById('planSiteName').textContent = State.selectedSite.name;
+            document.getElementById('planSiteType').innerHTML = "Type: " + State.selectedSite.type + " <span class='text-rose-400 font-bold'>" + warn + "</span>";
+            
+            let cHtml = [];
+            if (State.selectedSite.contacts && State.selectedSite.contacts.length > 0) {
+               for(let i=0; i<State.selectedSite.contacts.length; i++) {
+                   let c = State.selectedSite.contacts[i];
+                   let metaStr = "";
+                   if (c.phone) { metaStr += "T:" + c.phone + " "; }
+                   if (c.mobile) { metaStr += "M:" + c.mobile; }
+                   cHtml.push("<div>" + c.name + " <span class='text-[8px] text-slate-500 ml-1'>" + metaStr + "</span></div>");
+               }
+            }
+            document.getElementById('planSiteContacts').innerHTML = cHtml.join('');
+          }
+          if (State.selectedSupplier) {
+            document.getElementById('planSupplierName').textContent = State.selectedSupplier.name;
+            document.getElementById('planSupplierDetail').textContent = "Dist: " + State.selectedSupplier.distToSite + "km | Base: " + State.selectedSupplier.city;
+            document.getElementById('planSupplierBadgeBox').innerHTML = "<span class='px-2 py-0.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded text-[10px] font-bold'>Assigned</span>";
+          } else {
+            document.getElementById('planSupplierName').textContent = "No supplier assigned";
+            document.getElementById('planSupplierDetail').textContent = "None available within certified range";
+            document.getElementById('planSupplierBadgeBox').innerHTML = "";
+          }
+      }
+    }
+
+    function buildOrderText(f, isMail) {
+      const w = State.currentWagon, s = State.selectedSite, sup = State.selectedSupplier, stat = State.fallbackWorkshop;
+      const NL = "\n";
+      
+      let contactsArr = [];
+      if (s && s.contacts && s.contacts.length > 0) {
+          for (let i = 0; i < s.contacts.length; i++) {
+             let c = s.contacts[i];
+             let p = [c.name];
+             if (c.phone) { p.push("Tel: " + c.phone); }
+             if (c.mobile) { p.push("Mob: " + c.mobile); }
+             if (c.email) { p.push("Mail: " + c.email); }
+             contactsArr.push(p.join(', '));
+          }
+      }
+      const contactsStr = contactsArr.length > 0 ? contactsArr.join(isMail ? NL : ' | ') : 'N/A';
+      
+      let o = [];
+      if (State.isFallbackActive) {
+         o.push("[MOMA ORDER - STATIONARY FALLBACK]");
+         o.push("Wagon: " + w.wagon_number_formatted + " | Halter: " + f.halter + " | Mieter: " + f.mieter);
+         o.push("Status: " + State.currentStatus + " | Ladegut: " + f.nhm + " - " + f.desc);
+         o.push("Int: " + State.currentIntervention.id);
+         o.push("Target Workshop: " + stat.name + ", " + stat.city);
+         if (isMail) {
+             o.push("");
+             o.push("[Hinweis: Fotos wuerden im finalen Backend-System automatisch als Anhang uebermittelt werden.]");
+         }
+      } else {
+         if (isMail) {
+           o.push("Hallo " + sup.name + ",");
+           o.push("");
+           o.push("hiermit fragen wir einen mobilen Serviceeinsatz an:");
+           o.push("");
+           o.push("Wagennummer: " + w.wagon_number_formatted);
+           o.push("Wagenhalter: " + f.halter);
+           o.push("Mieter: " + f.mieter);
+           o.push("Auftrag/Schadcode: " + State.currentIntervention.id + " - " + State.currentIntervention.name);
+           o.push("Wagenstandort: " + s.name + " (GPS: " + s.lat + ", " + s.lng + ")");
+           o.push("Ansprechpartner vor Ort: ");
+           if (contactsArr.length > 0) {
+               for (let j = 0; j < contactsArr.length; j++) { o.push(contactsArr[j]); }
+           } else {
+               o.push("N/A");
+           }
+           o.push("");
+           o.push("Wunschtermin: " + f.termin);
+           o.push("Behaelterzustand: " + State.currentStatus);
+           o.push("Letztes Ladegut: " + f.nhm + " - " + f.desc);
+           o.push("");
+           o.push("[Hinweis: Fotos wuerden im finalen Backend-System automatisch als Anhang uebermittelt werden.]");
+           o.push("");
+           o.push("Mit freundlichen Gruessen");
+           o.push("VTG Customer Service");
+         } else {
+           o.push("[MOMA ORDER]");
+           o.push("Wagon: " + w.wagon_number_formatted + " | Halter: " + f.halter + " | Mieter: " + f.mieter);
+           o.push("Status: " + State.currentStatus + " | Ladegut: " + f.nhm + " - " + f.desc);
+           o.push("Int: " + State.currentIntervention.id + " | Termin: " + f.termin);
+           o.push("Site: " + s.name + " (" + s.lat + ", " + s.lng + ")");
+           o.push("Site Contacts: " + contactsStr);
+           o.push("Supplier: " + sup.name);
+         }
+      }
+      return o.join(NL);
+    }
+
+    function getFormValues() {
+      return { 
+          halter: document.getElementById('inputHalter').value || 'VTG', 
+          mieter: document.getElementById('inputMieter').value || '--', 
+          nhm: document.getElementById('inputNHM').value || 'N/A', 
+          desc: document.getElementById('inputLadegutDesc').value || 'N/A', 
+          termin: document.getElementById('inputDate').value || 'asap' 
+      };
+    }
+
+    function showToast(msg) { 
+        const t = document.getElementById('toast'); 
+        document.getElementById('toastMsg').textContent = msg; 
+        t.classList.remove('translate-y-20','opacity-0'); 
+        t.classList.add('translate-y-0','opacity-100'); 
+        setTimeout(function() { 
+            t.classList.remove('translate-y-0','opacity-100'); 
+            t.classList.add('translate-y-20','opacity-0'); 
+        }, 3000); 
+    }
+
+    // --- DATA FETCHING & INITIALIZATION ---
+    window.addEventListener('DOMContentLoaded', function() {
+      
+      // Fetch all JSON files asynchronously
+      Promise.all([
+          fetch('../data/moma_wagons.json').then(res => res.json()),
+          fetch('../data/moma_sites.json').then(res => res.json()),
+          fetch('../data/moma_suppliers.json').then(res => res.json()),
+          fetch('../data/moma_nhm.json').then(res => res.json())
+      ]).then(function(values) {
+          State.wagons = values[0];
+          State.sites = values[1];
+          let allSuppliers = values[2];
+          State.nhmList = values[3];
+
+          // Split suppliers and fallback workshops
+          for (let i = 0; i < allSuppliers.length; i++) {
+              if (allSuppliers[i].is_stationary_fallback) { State.statWorkshops.push(allSuppliers[i]); }
+              else { State.suppliers.push(allSuppliers[i]); }
+          }
+
+          document.getElementById('dbStatus').textContent = "DB OK: " + State.wagons.length + " Wagons";
+          document.getElementById('inputDate').valueAsDate = new Date();
+          
+          const wList = document.getElementById('wagonList');
+          const nList = document.getElementById('nhmList');
+          const is = document.getElementById('interventionSelect');
+          
+          for (let w = 0; w < State.wagons.length; w++) {
+              wList.appendChild(new Option(State.wagons[w].wagon_number_formatted, State.wagons[w].wagon_number_formatted));
+          }
+          for (let n = 0; n < State.nhmList.length; n++) {
+              nList.appendChild(new Option(State.nhmList[n].nhm_code + " - " + State.nhmList[n].description, State.nhmList[n].nhm_code));
+          }
+          for (let i = 0; i < INTERVENTIONS_DEF.length; i++) {
+              is.appendChild(new Option(INTERVENTIONS_DEF[i].id + ": " + INTERVENTIONS_DEF[i].name, INTERVENTIONS_DEF[i].id));
+          }
+          
+          if (State.wagons.length > 0) {
+            State.currentWagon = State.wagons[0];
+            document.getElementById('wagonInput').value = State.currentWagon.wagon_number_formatted;
+            document.getElementById('txtWagonType').textContent = State.currentWagon.uic_type + " (" + State.currentWagon.vtg_type + ")";
+            State.currentLat = State.currentWagon.lat; 
+            State.currentLng = State.currentWagon.lng;
+          }
+          
+          try {
+              if (typeof lucide !== 'undefined') { lucide.createIcons(); }
+          } catch (err) {}
+
+          initMap(); 
+          window.runDecisionEngine(); 
+      }).catch(function(err) {
+          console.error("JSON Fetch Error:", err);
+          document.getElementById('dbStatus').textContent = "DB ERROR: Failed to load JSON files!";
+          document.getElementById('dbStatus').className = "text-[11px] text-rose-400 font-mono font-bold";
+          alert("Fehler beim Laden der Stammdaten. Stellen Sie sicher, dass Sie den Python-Server gestartet haben und alle .json-Dateien gültig sind.");
+      });
+
+    });
+  </script>
+</body>
+</html>
