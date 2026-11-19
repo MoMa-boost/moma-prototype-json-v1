@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer-when-downgrade">
-  <title>VTG MoMa Decision Support Prototype v18 (Multi-INT & Cache Protection)</title>
+  <title>VTG MoMa Decision Support Prototype v18 (Multi-INT)</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -34,8 +34,8 @@
       <div class="bg-vtgOrange w-8 h-8 rounded flex items-center justify-center font-black text-white text-lg tracking-wider shadow">V</div>
       <div>
         <div class="flex items-center gap-2">
-          <span class="font-extrabold text-base tracking-wide text-white">VTG MoMa</span>
-          <span class="bg-vtgCyan/20 text-vtgCyan border border-vtgCyan/40 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded">Prototype v18.2 (Multi-INT)</span>
+          <span class="font-extrabold text-base tracking-wide text-white">1st Wagon Company MoMa</span>
+          <span class="bg-vtgCyan/20 text-vtgCyan border border-vtgCyan/40 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded">Prototype v18.1 (Multi-INT)</span>
         </div>
         <div class="text-[11px] text-emerald-400 font-mono" id="dbStatus">Requesting JSON data...</div>
       </div>
@@ -192,10 +192,10 @@
         </div>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="window.copyWamosComment()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-1.5 rounded text-[11px] flex items-center justify-center gap-1.5 transition">
-            <i data-lucide="copy" class="w-3.5 h-3.5"></i> WAMOS Copy
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Pre-request data copy
           </button>
           <button onclick="window.sendSimulatedEmail()" class="bg-vtgBlue hover:bg-vtgCyan text-white font-bold py-1.5 rounded text-[11px] flex items-center justify-center gap-1.5 transition shadow-md">
-            <i data-lucide="mail" class="w-3.5 h-3.5"></i> E-Mail Order
+            <i data-lucide="mail" class="w-3.5 h-3.5"></i> E-Mail Request
           </button>
         </div>
       </div>
@@ -351,6 +351,7 @@
       document.getElementById("tabContent" + capK).classList.remove('hidden'); 
       document.getElementById("tabBtn" + capK).className = "px-3 py-1 text-[11px] font-bold rounded bg-vtgBlue text-white border border-vtgCyan/30";
       
+      // Update visibility of fallback tab button based on State
       if(State.isFallbackActive) {
           document.getElementById('tabBtnFallback').style.display = 'block';
           document.getElementById('tabBtnSites').style.display = 'none';
@@ -481,6 +482,7 @@
           
           let siteApproved = true;
           for(let inter of State.selectedInterventions) {
+              // Convert string representation of list to actual check if needed
               let approved_ints = site.approved_interventions || "";
               if (!approved_ints.includes(inter.id)) {
                   siteApproved = false; break;
@@ -565,11 +567,13 @@
 
       const act = document.getElementById('txtRecommendedAction');
       
+      // Update UI tabs and button display based on Fallback State
       if (State.isFallbackActive) {
           act.textContent = "Route to Stationary"; act.className = "font-bold text-rose-400 uppercase tracking-wide";
           window.switchResultTab('fallback');
       } else {
           act.textContent = "Dispatch Feasible"; act.className = "font-bold text-emerald-400 uppercase tracking-wide";
+          // Important: If previously in fallback, force switch back to active matching tabs
           if (!document.getElementById('tabContentFallback').classList.contains('hidden')) {
               window.switchResultTab(State.siteMode === 'registered' ? 'sites' : 'suppliers');
           } else {
@@ -604,7 +608,7 @@
       
       let toName = State.isFallbackActive ? (State.fallbackWorkshop ? State.fallbackWorkshop.name : "Stationary") : State.selectedSupplier.name;
       const txt = buildOrderText(getFormValues(), false, toName);
-      navigator.clipboard.writeText(txt).then(function() { showToast("WAMOS Copied!"); }).catch(function() { alert("Copy failed."); });
+      navigator.clipboard.writeText(txt).then(function() { showToast("Data Copied!"); }).catch(function() { alert("Copy failed."); });
       State.history.push({date: new Date().toLocaleString(), wagon: State.currentWagon.wagon_number_formatted, action: State.isFallbackActive ? 'STATIONARY' : 'MOBILE'});
     };
 
@@ -725,9 +729,9 @@
           let site = State.sitesInRadius[i];
           const isSel = State.selectedSite && State.selectedSite.site_id === site.site_id;
           const sz = isSel ? 20 : 14;
-          const hStr = `<div style="background:${site.isWorkApproved && site.isRIDOk ? '#10b981' : '#f59e0b'}; width:${sz}px; height:${sz}px; border-radius:50%; border:2px solid #fff;"></div>`;
+          const hStr = '<div style="background:'+ (site.isWorkApproved && site.isRIDOk ? '#10b981' : '#f59e0b') +'; width:'+sz+'px; height:'+sz+'px; border-radius:50%; border:2px solid #fff;"></div>';
           siteMarkersGroup.addLayer(L.marker([site.lat, site.lng], {icon: L.divIcon({ className:'s-icon', html: hStr, iconSize:[sz,sz], iconAnchor:[sz/2,sz/2] })})
-            .bindPopup(`<b>${site.name}</b><br><button onclick="window.selectSiteById('${site.site_id}')" class="mt-1 bg-vtgBlue text-white px-2 py-0.5 rounded text-[10px]">Select</button>`));
+            .bindPopup('<b>'+site.name+'</b><br><button onclick="window.selectSiteById(\'" + site.site_id + "\')" class="mt-1 bg-vtgBlue text-white px-2 py-0.5 rounded text-[10px]">Select</button>'));
         }
       }
 
@@ -735,9 +739,9 @@
         for (let j = 0; j < State.matchedSuppliers.length; j++) {
           let sup = State.matchedSuppliers[j];
           const isSel = State.selectedSupplier && State.selectedSupplier.supplier_id === sup.supplier_id;
-          const hStr = `<div style="background:${isSel ? '#FF5800' : '#00A3E0'}; width:14px; height:14px; border-radius:3px; border:2px solid #fff;"></div>`;
+          const hStr = '<div style="background:'+ (isSel ? '#FF5800' : '#00A3E0') +'; width:14px; height:14px; border-radius:3px; border:2px solid #fff;"></div>';
           supplierMarkersGroup.addLayer(L.marker([sup.lat, sup.lng], {icon: L.divIcon({ className:'sup-icon', html: hStr, iconSize:[14,14], iconAnchor:[7,7] })})
-            .bindPopup(`<b>${sup.name}</b><br>Base: ${sup.city}<br>Dist to Site: ${sup.distToSite}km<br><button onclick="window.selectSupplierById('${sup.supplier_id}')" class="mt-1 bg-vtgOrange text-white px-2 py-0.5 rounded text-[10px]">Assign</button>`));
+            .bindPopup('<b>'+sup.name+'</b><br>Base: '+sup.city+'<br>Dist to Site: '+sup.distToSite+'km<br><button onclick="window.selectSupplierById(\'" + sup.supplier_id + "\')" class="mt-1 bg-vtgOrange text-white px-2 py-0.5 rounded text-[10px]">Assign</button>'));
         }
       }
 
@@ -759,10 +763,10 @@
       for (let i = 0; i < State.sitesInRadius.length; i++) {
           let site = State.sitesInRadius[i];
           const isSel = State.selectedSite && State.selectedSite.site_id === site.site_id;
-          siteRows.push(`<tr class="hover:bg-slate-800/60 cursor-pointer ${isSel ? 'bg-vtgBlue/20' : ''}" ondblclick="map.setView([${site.lat},${site.lng}],13)">
-          <td class="py-1.5 px-2">${site.name}</td><td class="py-1.5 px-2">${site.type}</td><td class="py-1.5 px-2">${site.currentDist}km</td>
-          <td class="py-1.5 px-2">A</td><td class="py-1.5 px-2">${site.rid_accepted ? 'Y' : 'N'}</td><td class="py-1.5 px-2">${site.isWorkApproved ? 'Y' : 'N'}</td>
-          <td class="py-1.5 px-2"><button onclick="window.selectSiteById('${site.site_id}')" class="px-2 py-0.5 rounded text-[9px] ${isSel ? 'bg-vtgCyan text-black font-bold' : 'bg-slate-700 text-white'}">${isSel ? 'Selected' : 'Select'}</button></td></tr>`);
+          siteRows.push('<tr class="hover:bg-slate-800/60 cursor-pointer ' + (isSel ? 'bg-vtgBlue/20' : '') + '" ondblclick="map.setView([' + site.lat + ',' + site.lng + '],13)">' +
+          '<td class="py-1.5 px-2">' + site.name + '</td><td class="py-1.5 px-2">' + site.type + '</td><td class="py-1.5 px-2">' + site.currentDist + 'km</td>' +
+          '<td class="py-1.5 px-2">A</td><td class="py-1.5 px-2">' + (site.rid_accepted ? 'Y' : 'N') + '</td><td class="py-1.5 px-2">' + (site.isWorkApproved ? 'Y' : 'N') + '</td>' +
+          '<td class="py-1.5 px-2"><button onclick="window.selectSiteById(\'" + site.site_id + "\')" class="px-2 py-0.5 rounded text-[9px] ' + (isSel ? 'bg-vtgCyan text-black font-bold' : 'bg-slate-700 text-white') + '">' + (isSel ? 'Selected' : 'Select') + '</button></td></tr>');
       }
       document.getElementById('tbodySites').innerHTML = siteRows.join('');
       
@@ -773,10 +777,10 @@
           let cArr = [];
           if(sup.phone) cArr.push(sup.phone);
           if(sup.email) cArr.push(sup.email);
-          supRows.push(`<tr class="hover:bg-slate-800/60 cursor-pointer ${isSel ? 'bg-vtgBlue/20' : ''}">
-          <td class="py-1.5 px-2">${sup.name}</td><td class="py-1.5 px-2">${sup.city}</td><td class="py-1.5 px-2">${sup.distToSite}km</td>
-          <td class="py-1.5 px-2">${sup.radius_km}km</td><td class="py-1.5 px-2 text-[9px] text-slate-400">${cArr.join(' / ')}</td>
-          <td class="py-1.5 px-2"><button onclick="window.selectSupplierById('${sup.supplier_id}')" class="px-2 py-0.5 rounded text-[9px] ${isSel ? 'bg-emerald-500 text-white font-bold' : 'bg-vtgOrange hover:bg-orange-600 text-white'}">${isSel ? 'Assigned' : 'Assign'}</button></td></tr>`);
+          supRows.push('<tr class="hover:bg-slate-800/60 cursor-pointer ' + (isSel ? 'bg-vtgBlue/20' : '') + '">' +
+          '<td class="py-1.5 px-2">' + sup.name + '</td><td class="py-1.5 px-2">' + sup.city + '</td><td class="py-1.5 px-2">' + sup.distToSite + 'km</td>' +
+          '<td class="py-1.5 px-2">' + sup.radius_km + 'km</td><td class="py-1.5 px-2 text-[9px] text-slate-400">' + cArr.join(' / ') + '</td>' +
+          '<td class="py-1.5 px-2"><button onclick="window.selectSupplierById(\'" + sup.supplier_id + "\')" class="px-2 py-0.5 rounded text-[9px] ' + (isSel ? 'bg-emerald-500 text-white font-bold' : 'bg-vtgOrange hover:bg-orange-600 text-white') + '">' + (isSel ? 'Assigned' : 'Assign') + '</button></td></tr>');
       }
       document.getElementById('tbodySuppliers').innerHTML = supRows.join('');
 
@@ -805,14 +809,16 @@
           if (State.selectedSite) {
             let warn = "";
             if (State.selectedSite.site_id !== 'ADHOC') {
-               if (!State.selectedSite.isWorkApproved) { warn += " \u274C Int. Not Approved"; }
-               if (!State.selectedSite.isRIDOk) { warn += " \u274C RID Not Allowed"; }
+               if (!State.selectedSite.isWorkApproved) { warn += " ❌ Int. Not Approved"; }
+               if (!State.selectedSite.isRIDOk) { warn += " ❌ RID Not Allowed"; }
             }
             document.getElementById('planSiteName').textContent = State.selectedSite.name;
             document.getElementById('planSiteType').innerHTML = "Type: " + State.selectedSite.type + " <span class='text-rose-400 font-bold'>" + warn + "</span>";
             
             let cHtml = [];
             if (State.selectedSite.contacts && State.selectedSite.contacts.length > 0) {
+               // Assuming contacts might be embedded in the new JSON structure differently. 
+               // For now, retaining standard parse if it's an array of objects
                if(Array.isArray(State.selectedSite.contacts)) {
                    for(let i=0; i<State.selectedSite.contacts.length; i++) {
                        let c = State.selectedSite.contacts[i];
@@ -874,7 +880,7 @@
            o.push("[Hinweis: Fotos wuerden im finalen Backend-System automatisch als Anhang uebermittelt werden.]");
            o.push("");
            o.push("Mit freundlichen Gruessen");
-           o.push("VTG Customer Service");
+           o.push("1st Wagon Company Customer Service");
          } else {
            o.push("[MOMA ORDER - STATIONARY FALLBACK]");
            o.push("Wagon: " + w.wagon_number_formatted + " | Halter: " + f.halter + " | Mieter: " + f.mieter);
@@ -907,7 +913,7 @@
            o.push("[Hinweis: Fotos wuerden im finalen Backend-System automatisch als Anhang uebermittelt werden.]");
            o.push("");
            o.push("Mit freundlichen Gruessen");
-           o.push("VTG Customer Service");
+           o.push("1st Wagon Company Customer Service");
          } else {
            o.push("[MOMA ORDER]");
            o.push("Wagon: " + w.wagon_number_formatted + " | Halter: " + f.halter + " | Mieter: " + f.mieter);
@@ -945,12 +951,11 @@
     // --- DATA FETCHING & INITIALIZATION ---
     window.addEventListener('DOMContentLoaded', function() {
       
-      const ts = Date.now();
       Promise.all([
-          fetch('../data/moma_wagons.json?v=' + ts).then(res => res.json()),
-          fetch('../data/moma_sites.json?v=' + ts).then(res => res.json()),
-          fetch('../data/moma_suppliers.json?v=' + ts).then(res => res.json()),
-          fetch('../data/moma_nhm.json?v=' + ts).then(res => res.json())
+          fetch('../data/moma_wagons.json').then(res => res.json()),
+          fetch('../data/moma_sites.json').then(res => res.json()),
+          fetch('../data/moma_suppliers.json').then(res => res.json()),
+          fetch('../data/moma_nhm.json').then(res => res.json())
       ]).then(function(values) {
           State.wagons = values[0];
           State.sites = values[1];
